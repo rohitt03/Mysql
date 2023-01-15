@@ -1,0 +1,530 @@
+
+
+
+
+						Basic query and regex in sql 
+
+
+
+1. To list all records with sal > 2000 and comm>200
+mysql> select empno,ename
+    -> from emp
+    -> where sal>2000 or comm>200;
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7499 | ALLEN  |
+|  7521 | WARD   |
+|  7566 | JONES  |
+|  7654 | MARTIN |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7902 | FORD   |
++-------+--------+
+===============================================================================================================
+2. To list all record with job=’Clerk’ or sal>2000
+mysql> select empno,ename
+    -> from emp
+    -> where job='clerk' or sal>2000;
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7566 | JONES  |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7902 | FORD   |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+3. To list all the record with sal=1250 or 1100 or 2850
+mysql> select empno,ename
+    -> from emp
+    -> where sal in(1250,1100,2850);
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7521 | WARD   |
+|  7654 | MARTIN |
+|  7698 | BLAKE  |
+|  7876 | ADAMS  |
++-------+--------+
+===============================================================================================================
+4. To list all employees with sal>1250 and <2850
+mysql> select empno,ename
+    -> from emp
+    -> where sal between 1251 and 2849;
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7499 | ALLEN  |
+|  7782 | CLARK  |
+|  7844 | TURNER |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+5. To list all employees with name ends with AS
+mysql> select empno,ename
+    -> from emp
+    -> where ename like '%as';
+Empty set (0.00 sec)
+===============================================================================================================
+6. To list all employees with job starts with C and ends with K
+mysql> select empno,ename
+    -> from emp
+    -> where job like 'c%k';
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+7. To list all employees with job contains L at third position and
+M at third last position
+mysql> select empno,ename,job
+    -> from emp
+    -> where job like '__l%m__';
++-------+--------+----------+
+| empno | ename  | job      |
++-------+--------+----------+
+|  7499 | ALLEN  | SALESMAN |
+|  7521 | WARD   | SALESMAN |
+|  7654 | MARTIN | SALESMAN |
+|  7844 | TURNER | SALESMAN |
++-------+--------+----------+
+===============================================================================================================
+8. To list all the record with sal not equal to 1250 or 1100 or 2850
+mysql> select empno,ename
+    -> from emp
+    -> where sal not in(1250,1100,2850);
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7499 | ALLEN  |
+|  7566 | JONES  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7844 | TURNER |
+|  7900 | JAMES  |
+|  7902 | FORD   |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+10. To list all employees with job starts with C , E at 3rd position and ends with K
+mysql> select empno,ename
+    -> from emp
+    -> where job like 'c_e%k';
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+11. To list all rows with comm is null
+
+mysql> select empno,ename
+    -> from emp
+    -> where comm is null;
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7566 | JONES  |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7902 | FORD   |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+12. To list all employees with sal is null and name starts with ‘S’
+mysql> select empno,ename
+    -> from emp
+    -> where sal is null or ename like 's%';
++-------+-------+
+| empno | ename |
++-------+-------+
+|  7369 | SMITH |
+|  7788 | SCOTT |
++-------+-------+
+===============================================================================================================
+13. To list all employees with job contains 5 characters
+mysql> select empno,ename
+    -> from emp
+    -> where job like '_____';
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+14. To list all employees with name contain ‘A’ at 1 position and job
+Contains 5 characters
+mysql> select empno,ename
+    -> from emp
+    -> where ename like 'a%' or job like'_____';
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7499 | ALLEN  |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7934 | MILLER |
++-------+--------+
+===============================================================================================================
+1. Retrieve the details (Name, Salary and dept no) of the emp who are working in department code 20, 30 and 40.
+mysql> select ename,sal,deptno
+    -> from emp
+    -> where deptno in(20,30,40);
++--------+---------+--------+
+| ename  | sal     | deptno |
++--------+---------+--------+
+| SMITH  |  800.00 |     20 |
+| ALLEN  | 1600.00 |     30 |
+| WARD   | 1250.00 |     30 |
+| JONES  | 2975.00 |     20 |
+| MARTIN | 1250.00 |     30 |
+| BLAKE  | 2850.00 |     30 |
+| SCOTT  | 3000.00 |     20 |
+| TURNER | 1500.00 |     30 |
+| ADAMS  | 1100.00 |     20 |
+| JAMES  |  950.00 |     30 |
+| FORD   | 3000.00 |     20 |
++--------+---------+--------+
+===============================================================================================================
+2. Display the total salary of all employees . Total salary will be calculated as sal+comm+sal*0.10
+ select empno,ename,format(sal*0.90+ifnull(comm,0),2) "Total_Salary"
+    -> from emp;
++-------+--------+--------------+
+| empno | ename  | Total_Salary |
++-------+--------+--------------+
+|  7369 | SMITH  | 720.00       |
+|  7499 | ALLEN  | 1,740.00     |
+|  7521 | WARD   | 1,625.00     |
+|  7566 | JONES  | 2,677.50     |
+|  7654 | MARTIN | 2,525.00     |
+|  7698 | BLAKE  | 2,565.00     |
+|  7782 | CLARK  | 2,205.00     |
+|  7788 | SCOTT  | 2,700.00     |
+|  7839 | KING   | 4,500.00     |
+|  7844 | TURNER | 1,350.00     |
+|  7876 | ADAMS  | 990.00       |
+|  7900 | JAMES  | 855.00       |
+|  7902 | FORD   | 2,700.00     |
+|  7934 | MILLER | 1,170.00     |
+|  7940 | rohitt | 2,159.10     |
++-------+--------+--------------+
+===============================================================================================================
+3. List the Name and job of the emp who have joined before 1 jan 1986 and whose salary range is between 1200and 2500. Display the columns with user defined Column headers.
+select ename,job,date_format(hiredate,'%d-%m-%Y') "Hire_date"
+    -> from emp
+    -> where hiredate<'1986-01-01';
++--------+-----------+------------+
+| ename  | job       | Hire_date  |
++--------+-----------+------------+
+| SMITH  | CLERK     | 17-12-1980 |
+| ALLEN  | SALESMAN  | 20-02-1981 |
+| WARD   | SALESMAN  | 22-02-1981 |
+| JONES  | MANAGER   | 02-04-1981 |
+| MARTIN | SALESMAN  | 28-09-1981 |
+| BLAKE  | MANAGER   | 01-05-1981 |
+| CLARK  | MANAGER   | 09-06-1981 |
+| SCOTT  | ANALYST   | 09-12-1982 |
+| KING   | PRESIDENT | 17-11-1981 |
+| TURNER | SALESMAN  | 08-09-1981 |
+| ADAMS  | CLERK     | 12-01-1983 |
+| JAMES  | CLERK     | 03-12-1981 |
+| FORD   | ANALYST   | 03-12-1981 |
+| MILLER | CLERK     | 23-01-1982 |
+| rohitt | teacher   | 08-08-1980 |
++--------+-----------+------------+
+===============================================================================================================
+4. List the empno, name, and department number of the emp works under manager with id 7698
+mysql> select empno,ename,deptno
+    -> from emp
+    -> where mgr=7698;
++-------+--------+--------+
+| empno | ename  | deptno |
++-------+--------+--------+
+|  7499 | ALLEN  |     30 |
+|  7521 | WARD   |     30 |
+|  7654 | MARTIN |     30 |
+|  7844 | TURNER |     30 |
+|  7900 | JAMES  |     30 |
++-------+--------+--------+
+===============================================================================================================
+5. List the name, job, and salary of the emp who are working in departments 10 and 30.
+select ename,job,sal
+    -> from emp
+    -> where deptno in(10,30);
++--------+-----------+---------+
+| ename  | job       | sal     |
++--------+-----------+---------+
+| ALLEN  | SALESMAN  | 1600.00 |
+| WARD   | SALESMAN  | 1250.00 |
+| MARTIN | SALESMAN  | 1250.00 |
+| BLAKE  | MANAGER   | 2850.00 |
+| CLARK  | MANAGER   | 2450.00 |
+| KING   | PRESIDENT | 5000.00 |
+| TURNER | SALESMAN  | 1500.00 |
+| JAMES  | CLERK     |  950.00 |
+| MILLER | CLERK     | 1300.00 |
+| rohitt | teacher   | 2399.00 |
++--------+-----------+---------+
+===============================================================================================================
+6. Display name concatenated with dept code separated by comma and space. Name the column as ‘Emp info’.
+mysql> select concat(ename,", ",deptno) "emp info"
+    -> from emp;
++------------+
+| emp info   |
++------------+
+| SMITH, 20  |
+| ALLEN, 30  |
+| WARD, 30   |
+| JONES, 20  |
+| MARTIN, 30 |
+| BLAKE, 30  |
+| CLARK, 10  |
+| SCOTT, 20  |
+| KING, 10   |
+| TURNER, 30 |
+| ADAMS, 20  |
+| JAMES, 30  |
+| FORD, 20   |
+| MILLER, 10 |
+| satyam, 30 |
++------------+
+15 rows in set (0.00 sec)
+===============================================================================================================
+7. Display the emp details who do not have manager.
+mysql> select *
+    -> from emp
+    -> where job != 'manager';
++-------+--------+-----------+------+------------+---------+----------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM     | DEPTNO |
++-------+--------+-----------+------+------------+---------+----------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |     NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |   300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |   500.00 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 |  1400.00 |     30 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |     NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |     NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |     0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |     NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |     NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |     NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |     NULL |     10 |
+|  8000 | satyam | teacher   | 7782 | 2022-10-05 |  150.00 | 30000.00 |     30 |
++-------+--------+-----------+------+------------+---------+----------+--------+
+12 rows in set (0.00 sec)
+===============================================================================================================
+8. Write a query which will display name, department no and date of joining of all employee who were joined January 1, 1981 and March 31, 1983. Sort it based on date of joining (ascending).
+select ename,deptno,hiredate
+from emp
+where hiredate between '1981-1-1' and '1983-3-31'
+order by hiredate
+mysql> select ename,deptno,date_format(hiredate,'%d-%m-%Y')
+    -> from emp
+    -> where hiredate in ('1981-01-01','1983-03-31');
+Empty set (0.00 sec)
+===============================================================================================================
+9. Display the employee details where the job contains word ‘AGE’ anywhere in the Job
+mysql> select *
+    -> from emp
+    -> where job regexp 'age';
++-------+-------+---------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+---------+------+------------+---------+------+--------+
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | MANAGER | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7782 | CLARK | MANAGER | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
++-------+-------+---------+------+------------+---------+------+--------+
+3 rows in set (0.02 sec)
+===============================================================================================================
+11. List the details of the employee , whose names start with ‘A’ and end with ‘S’ or whose names contains N as the second or third character, and ending with either ‘N’ or ‘S’.
+select *
+from emp
+where ename like ‘A%S’ or ename like ‘_N%N’ or ename like ‘_N%S’ or ename like ‘__N%N’ or ename like ‘__N%S’
+mysql> select *
+    -> from emp
+    -> where ename regexp '(^a.*s$)|(^.n{1,2}.*(n|s)$)';
++-------+-------+-------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+-------+------+------------+---------+------+--------+
+|  7876 | ADAMS | CLERK | 7788 | 1983-01-12 | 1100.00 | NULL |     20 |
++-------+-------+-------+------+------------+---------+------+--------+
+1 row in set (0.02 sec)
+===============================================================================================================
+12. List the names of the emp having ‘_’ character in their name.
+mysql> select *
+    -> from emp
+    -> where ename regexp ' ';
+Empty set (0.00 sec)
+
+Single Row functions
+1. To list all employees and their email, to generate email use 2 to 5 characters from ename
+Concat it with 2 to 4 characters in job and then concat it with ‘@mycompany.com’
+mysql> select empno,ename,job,concat(substr(ename,2,3),substr(job,2,4),'@mycompany.com') "emailid"
+    -> from emp
+    -> ;
++-------+--------+-----------+-----------------------+
+| empno | ename  | job       | emailid               |
++-------+--------+-----------+-----------------------+
+|  7369 | SMITH  | CLERK     | MITLERK@mycompany.com |
+|  7499 | ALLEN  | SALESMAN  | LLEALES@mycompany.com |
+|  7521 | WARD   | SALESMAN  | ARDALES@mycompany.com |
+|  7566 | JONES  | MANAGER   | ONEANAG@mycompany.com |
+|  7654 | MARTIN | SALESMAN  | ARTALES@mycompany.com |
+|  7698 | BLAKE  | MANAGER   | LAKANAG@mycompany.com |
+|  7782 | CLARK  | MANAGER   | LARANAG@mycompany.com |
+|  7788 | SCOTT  | ANALYST   | COTNALY@mycompany.com |
+|  7839 | KING   | PRESIDENT | INGRESI@mycompany.com |
+|  7844 | TURNER | SALESMAN  | URNALES@mycompany.com |
+|  7876 | ADAMS  | CLERK     | DAMLERK@mycompany.com |
+|  7900 | JAMES  | CLERK     | AMELERK@mycompany.com |
+|  7902 | FORD   | ANALYST   | ORDNALY@mycompany.com |
+|  7934 | MILLER | CLERK     | ILLLERK@mycompany.com |
+|  8000 | satyam | teacher   | atyeach@mycompany.com |
++-------+--------+-----------+-----------------------+
+15 rows in set (0.00 sec)
+
+2. List all employees who joined in September.
+
+mysql> select *
+    -> from emp
+    -> where month(hiredate)=9;
++-------+--------+----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+----------+------+------------+---------+---------+--------+
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
++-------+--------+----------+------+------------+---------+---------+--------+
+2 rows in set (0.00 sec)
+
+3. List the empno, name, and department number of the emp who have experience of 18 or more years and sort them based on their experience.
+mysql> select empno,ename,deptno,floor(datediff(curdate(),hiredate)/365) "experience"
+    -> from emp
+    -> where floor(datediff(curdate(),hiredate)/365)>18
+    -> order by experience;
++-------+--------+--------+------------+
+| empno | ename  | deptno | experience |
++-------+--------+--------+------------+
+|  7788 | SCOTT  |     20 |         39 |
+|  7876 | ADAMS  |     20 |         39 |
+|  7839 | KING   |     10 |         40 |
+|  7900 | JAMES  |     30 |         40 |
+|  7902 | FORD   |     20 |         40 |
+|  7934 | MILLER |     10 |         40 |
+|  7369 | SMITH  |     20 |         41 |
+|  7499 | ALLEN  |     30 |         41 |
+|  7521 | WARD   |     30 |         41 |
+|  7566 | JONES  |     20 |         41 |
+|  7654 | MARTIN |     30 |         41 |
+|  7698 | BLAKE  |     30 |         41 |
+|  7782 | CLARK  |     10 |         41 |
+|  7844 | TURNER |     30 |         41 |
++-------+--------+--------+------------+
+14 rows in set (0.00 sec)
+
+4. Display the employee details who joined on 3rd of any month or any year
+
+mysql> select *
+    -> from emp
+    -> where day(hiredate)=3;
++-------+-------+---------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+---------+------+------------+---------+------+--------+
+|  7900 | JAMES | CLERK   | 7698 | 1981-12-03 |  950.00 | NULL |     30 |
+|  7902 | FORD  | ANALYST | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
++-------+-------+---------+------+------------+---------+------+--------+
+2 rows in set (0.00 sec)
+
+5. display all employees who joined between years 1981 to 1983.
+mysql> select *
+    -> from emp
+    -> where year(hiredate) between 1981 and 1983;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+13 rows in set (0.00 sec)
+
+Group functions
+6. Display the Highest, Lowest, Total & Average salary of all employee. Label the columns Maximum, Minimum, Total and Average respectively for each Department. Also round the result to the nearest whole number.
+
+mysql> select deptno,max(sal)'maximum',min(sal)'minimum',sum(sal+ifnull(comm,0))'total',format(avg(sal),2)"average"
+    -> from emp
+    -> group by deptno
+    -> order by deptno;
++--------+---------+---------+----------+----------+
+| deptno | maximum | minimum | total    | average  |
++--------+---------+---------+----------+----------+
+|     10 | 5000.00 | 1300.00 |  8750.00 | 2,916.67 |
+|     20 | 3000.00 |  800.00 | 10875.00 | 2,175.00 |
+|     30 | 2850.00 |  150.00 | 41750.00 | 1,364.29 |
++--------+---------+---------+----------+----------+
+3 rows in set (0.00 sec)
+
+7. Display Department no and number of managers working in that department. Label the column as ‘Total Number of Managers’ for each department.
+mysql> select deptno,count(*)"total manager"
+    -> from emp
+    -> where job='manager'
+    -> group by deptno
+    -> order by deptno;
++--------+---------------+
+| deptno | total manager |
++--------+---------------+
+|     10 |             1 |
+|     20 |             1 |
+|     30 |             1 |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+8. Get the Department number, and sum of Salary of all non managers where the sum is greater than 20000.
+mysql> select deptno,sum(sal) "sum"
+    -> from emp
+    -> where job not in ('manager')
+    -> group by deptno
+    -> order by deptno;
++--------+---------+
+| deptno | sum     |
++--------+---------+
+|     10 | 6300.00 |
+|     20 | 7900.00 |
+|     30 | 6700.00 |
++--------+---------+
+3 rows in set (0.00 sec)
